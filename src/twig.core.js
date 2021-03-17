@@ -924,12 +924,19 @@ module.exports = function (Twig) {
         // Check for existing template
         if (Twig.cache && typeof cached !== 'undefined') {
             // A template is already saved with the given id.
+
+            let result = cached
+
+            if (params.parser === 'source') {
+                result = cached.source
+            }
+
             if (typeof callback === 'function') {
-                callback(cached);
+                callback(result);
             }
             // TODO: if async, return deferred promise
 
-            return cached;
+            return result;
         }
 
         // If the parser name hasn't been set, default it to twig
@@ -1256,6 +1263,7 @@ module.exports = function (Twig) {
 
         if (is('String', data)) {
             this.tokens = Twig.prepare.call(this, data);
+            this.source = data;
         } else {
             this.tokens = data;
         }
