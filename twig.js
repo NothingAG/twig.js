@@ -1833,7 +1833,7 @@ module.exports = function (Twig) {
           // This template extends another template
           if (template.options.allowInlineIncludes) {
             // The template is provided inline
-            parentTemplate = Twig.Templates.load(template.parentTemplate);
+            parentTemplate = Twig.Templates.load(is('String', template.parentTemplate) ? template.parentTemplate : template.parentTemplate.id);
 
             if (parentTemplate) {
               parentTemplate.options = template.options;
